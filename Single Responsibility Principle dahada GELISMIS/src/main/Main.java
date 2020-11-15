@@ -16,33 +16,38 @@ public class Main {
     static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
-        /* for (int i = 0; i < 1050; i++) {
-            System.out.println(i+" ) "+Character.toString(i));
-        }*/
+
         while (true) {
-            Options();
+            printOptions(options());
             SelectProcess();
 
         }
 
     }
 
-    static void Options() {
-        System.out.println("1-) Add User\n"
+    static String options() {
+        return "1-) Add User\n"
                 + "2-) Login\n"
-                + "3-) Exit\n");
+                + "3-) Exit\n";
+
+    }
+
+    static void printOptions(String Options) {
+        System.out.println(Options);
         SafeScanner.howToCancelInfo();
+
     }
 
     static void SelectProcess() {
 
         int choose = -1;
-        try {
+        choose = SafeScanner.followindLine_EnterOnlyNumber(options());
+        /* try {
             choose = new SafeScanner().getInteger();
         } catch (Exception ex) {
             System.err.println("Please enter  numbers  between given  options in the following line : ");
 
-        }
+        }*/
         try {
             switch (choose) {
 
@@ -70,7 +75,7 @@ public class Main {
 
             }
         } catch (Exception ex) {
-            System.err.println(ex);
+            System.out.println(ex);
         }
 
     }
@@ -131,22 +136,4 @@ public class Main {
         return address;
 
     }
-
-    /*
- 
-    kullanici ekle --> kayitli kullaniciya ata  
-    mainde  giris yap (kayitli kullanicilari gonder) --> onlardan birisi ise kayit yapilmis olsun ve ekrana bastir
-   
-    
-    
-    
-    
-    
-    
-    kullanici sinifini olustur 
-    adress sinifini olustur
-    kayitli kullanicilari olustur
-    Login sinifini olustur
-        
-     */
 }

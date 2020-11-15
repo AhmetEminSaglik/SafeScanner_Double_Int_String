@@ -2,6 +2,7 @@ package safescanner;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import safescanner.language.CharacterControl;
 
 public class SafeScanner {
 
@@ -51,16 +52,16 @@ public class SafeScanner {
     public static String getString() throws Exception { //return just string
         try {
 
-            String text = scanner.nextLine();
-            isCancelled(text);
-            char[] a = text.toCharArray();
+            String text = getText();
+
+            char[] a = text.toLowerCase().toCharArray();
             if (a.length == 0) {
                 throw new InputMismatchException();
             }
             text = text.trim();
 
             for (int i = 0; i < a.length; i++) {
-                if (text.length() == 0 || (!Character.isLetter(a[i]) && !Character.isSpaceChar(a[i]))) {
+                if (text.length() == 0 || (!CharacterControl.isLetter(a[i]))) { //if (text.length() == 0 || (!CharacterControl.isLetter(a[i]) && !Character.isSpaceChar(a[i]))) {
                     throw new InputMismatchException();
                 }
 
@@ -88,10 +89,29 @@ public class SafeScanner {
 
     public static String getText() throws Exception { // return every input
         String text = scanner.nextLine();
+        text = text.trim();
         isCancelled(text);
+        
+        if(text.length()==0){
+            System.err.println("You cant enter just space");
+            return getText();
+        }
 
         return text;
 
+    }
+
+    public static int followindLine_EnterOnlyNumber(String text) {
+        int choice;
+        try {
+            choice = getInteger();
+        } catch (Exception ex) {
+            System.err.println("Please enter  numbers  between given  options : \n");
+            System.out.println(text);
+            return followindLine_EnterOnlyNumber(text);
+
+        }
+        return choice;
     }
 
 }

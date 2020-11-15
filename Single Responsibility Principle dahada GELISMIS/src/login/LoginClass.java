@@ -3,14 +3,13 @@ package login;
 import user.RegisteredUsers;
 import user.UserInformation;
 import java.util.ArrayList;
-import java.util.Scanner;
 import print.AskForInfo;
+import safescanner.SafeScanner;
 
 public class LoginClass {
 
     UserInformation user;
     ArrayList<RegisteredUsers> registeredUsers;
-    Scanner scanner = new Scanner(System.in);
 
     public LoginClass(ArrayList<RegisteredUsers> registeredUsers) {
         this.registeredUsers = registeredUsers;
@@ -18,24 +17,30 @@ public class LoginClass {
     }
 
     public UserInformation Login() {
-        int count = 0;
-        while (count < 3) {
-            AskForInfo.PleaseEnter("Username ");
-            String id = scanner.nextLine();
-            AskForInfo.PleaseEnter("Password ");
-            String pass = scanner.nextLine();
+        try {
+            int count = 0;
+            while (count < 3) {
 
-            for (int i = 0; i < registeredUsers.size(); i++) {
-                if (registeredUsers.get(i).getId().equals(id)
-                        && registeredUsers.get(i).getPass().equals(pass)) {
-                    System.out.println("login is successfull");
+                AskForInfo.PleaseEnter("Username ");
+                String id = SafeScanner.getText();
+                AskForInfo.PleaseEnter("Password ");
+                String pass = SafeScanner.getText();
 
-                    return registeredUsers.get(i).getUserInformation();
+                for (int i = 0; i < registeredUsers.size(); i++) {
+                    if (registeredUsers.get(i).getId().equals(id)
+                            && registeredUsers.get(i).getPass().equals(pass)) {
+                        System.out.println("login is successfull");
 
+                        return registeredUsers.get(i).getUserInformation();
+
+                    }
                 }
+                System.out.println("!!! Username or Password is wrong !!!\n");
+                count++;
+
             }
-            System.out.println("!!! Username or Password is wrong !!!\n");
-            count++;
+        } catch (Exception ex) {
+            System.out.println(ex);
         }
         return null;
     }

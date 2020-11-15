@@ -18,8 +18,9 @@ public class AfterLogin {
         int select = -1;
         while (select != 3) {
             try {
-                Options();
-                select = SafeScanner.getInteger();
+                printOptions(Options());
+                
+                select = SafeScanner.followindLine_EnterOnlyNumber(Options());
                 switch (select) {
                     case 1:
                         userNameSurname();
@@ -36,7 +37,7 @@ public class AfterLogin {
 
                 }
             } catch (Exception ex) {
-                Logger.getLogger(AfterLogin.class.getName()).log(Level.SEVERE, null, ex);
+                System.out.println(ex);
             }
 
         }
@@ -44,10 +45,14 @@ public class AfterLogin {
 
     }
 
-    void Options() {
-        System.out.println("1-) My name ~ surname\n"
+    String Options() {
+        return "1-) My name ~ surname\n"
                 + "2-) My address\n"
-                + "3-) logout\n");
+                + "3-) logout\n";
+    }
+
+    void printOptions(String options) {
+        System.out.println(options);
     }
 
     void userNameSurname() {
